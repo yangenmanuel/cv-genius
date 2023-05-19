@@ -1,4 +1,17 @@
 import './globals.css'
+import { Source_Sans_Pro, Lato } from 'next/font/google'
+
+const sourceSansPro = Source_Sans_Pro({
+  weight: '700',
+  subsets: ['latin'],
+  variable: '--font-source-sans-pro'
+})
+
+const lato = Lato({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-lato'
+})
 
 export const metadata = {
   title: 'CVGenius',
@@ -15,8 +28,8 @@ export default function RootLayout ({
   children: React.ReactNode
 }) {
   return (
-    <html lang='es'>
-      <body>{children}</body>
+    <html lang='es' className={`${sourceSansPro.variable} ${lato.variable}`}>
+      <body className='bg-black text-white h-screen'>{children}</body>
     </html>
   )
 }
