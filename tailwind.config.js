@@ -15,6 +15,16 @@ module.exports = {
       fontFamily: {
         'source-sans-pro': ['var(--font-source-sans-pro)'],
         sans: ['var(--font-lato)']
+      },
+      keyframes: {
+        float: {
+          '0%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-30px)' },
+          '100%': { transform: 'translateY(0px)' }
+        }
+      },
+      animation: {
+        float: 'float ease-in-out 3s infinite'
       }
     }
   },
