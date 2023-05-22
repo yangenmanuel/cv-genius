@@ -1,7 +1,12 @@
+'use client'
+
+import Cv from '@/components/CV'
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
+
 export default function Playground () {
   return (
-    <main className=''>
-      <section className='lg:inline-block border w-1/2'>
+    <main className='mx-auto flex [&>section]:flex-1'>
+      <section className='border w-1/2'>
         <h2>Add your information</h2>
 
         <form>
@@ -23,7 +28,16 @@ export default function Playground () {
         </form>
       </section>
 
-      <section className='lg:inline-block border w-1/2'>Cv</section>
+      <section className='border'>
+        <h2>Preview</h2>
+        <PDFViewer children={<Cv />} width='100%' height='auto' />
+
+        <div className=''>
+          <PDFDownloadLink fileName='CV' document={<Cv />}>
+            {({ loading }) => (loading ? <p>'Cargando'</p> : <button className='text-blue-50 py-2 px-4 bg-blue-500 rounded-md after:content-["↡"] after:ml-2 hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl transition-all duration-300'>Descargar</button>)}
+          </PDFDownloadLink>
+        </div>
+      </section>
     </main>
   )
 }
