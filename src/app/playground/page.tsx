@@ -2,18 +2,27 @@
 
 import Cv from '@/components/CV'
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 export default function Playground () {
   const [data, setData] = useState({
-    name: String,
+    user: String,
     role: String,
     email: String,
     phone: String,
     linkedIn: String,
-    github: String,
-    profile: String
+    github: String
   })
+
+  const [workExperienceForm, setWorkExperienceForm] = useState({
+    company: String,
+    from: String,
+    to: String,
+    jobRole: String,
+    description: String
+  })
+
+  const [totalWorkExperiences, setTotalWorkExperiences] = useState([]<workExperienceForm>)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(data)
@@ -23,18 +32,43 @@ export default function Playground () {
     })
   }
 
+  const handleWorkDataChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    setWorkExperienceForm({
+      ...workExperienceForm,
+      [e.target.name]: e.target.value
+    })
+    console.log(workExperienceForm)
+  }
+
+  const handleClick = () => {
+    modalRef.current.showModal()
+  }
+
+  const addWorkExperience = () => {
+    setTotalWorkExperiences([...totalWorkExperiences, workExperienceForm])
+    console.log(totalWorkExperiences)
+    modalRef.current.close()
+  }
+
+  const handleDelete = (index: number) => {
+    const updatedTotalWorkExperiences = [...totalWorkExperiences]
+    updatedTotalWorkExperiences.splice(index, 1)
+    setTotalWorkExperiences(updatedTotalWorkExperiences)
+  }
+
+  const modalRef = useRef(null)
+
   return (
     <main className='mx-auto flex flex-col lg:flex-row [&>section]:flex-1'>
-      <section className='border'>
+      <section className=''>
         <h2>Add your information</h2>
 
-        <form className=''>
           <div className='p-5'>
             <h2>Datos Personales</h2>
 
             <div className=''>
               <label>Nombre</label>
-              <input className='text-black p-1' type='text' name='name' required onChange={handleChange} />
+              <input className='text-black p-1' type='text' name='user' required onChange={handleChange} />
             </div>
 
             <div className='m-2'>
@@ -69,15 +103,60 @@ export default function Playground () {
           </div>
 
           <div className='p-5'>
-            <input className='text-black p-1' type='text' name='experience' placeholder='Experiencia' onChange={handleChange} />
-            <input className='text-black p-1' type='text' name='projects' placeholder='Proyectos personales' onChange={handleChange} />
+            <div className=' mb-3'>
+              <label className='mr-5'>Añadir experiencia laboral</label>
+              <button className='px-3 py-1 border-2 border-blue-500 rounded-md text-gray-200 font-bold' onClick={handleClick}>+</button>
+            </div>
+
+            <dialog ref={modalRef} className='rounded-md bg-[#]'>
+              <div>
+                <label>Compañía</label>
+                <input type='text' name='company' onChange={handleWorkDataChange} required />
+              </div>
+              <div>
+                <label>Desde:</label>
+                <input type='month' name='from' onChange={handleWorkDataChange} required />
+              </div>
+              <div>
+                <label>Hasta</label>
+                <input type='month' name='to' onChange={handleWorkDataChange} required />
+              </div>
+              <div>
+                <label>Rol: </label>
+                <input type='text' name='jobRole' onChange={handleWorkDataChange} required />
+              </div>
+              <div className=''>
+                <label className='block'>Que labor desempeñaste?</label>
+                <textarea name='description' cols={30} rows={10} onChange={handleWorkDataChange} required />
+              </div>
+              <div className='flex justify-center'>
+                <button className='px-3 py-2 bg-blue-500 rounded-md text-gray-200' onClick={addWorkExperience}>Añadir</button>
+              </div>
+            </dialog>
+
+            <div>
+              {totalWorkExperiences && totalWorkExperiences.map((item, i) => {
+                return (
+                  <div className='bg-[#202020] px-2 py-4 block rounded-md mb-2 flex justify-between items-center' key={i}>
+                    <div className=''>
+                      {item.from.replace('-', '/')}-{item.to.replace('-', '/')}
+                      <span className='mx-5'>{item.company}</span>
+                      {item.jobRole}
+                    </div>
+                    <div className=''>
+                      <button className='bg-[#202024] border border-red-500 px-3 rounded-md font-bold text-lg' onClick={() => handleDelete(i)}>-</button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
             <input className='text-black p-1' type='text' name='habilites' placeholder='Habilidades' onChange={handleChange} />
             <input className='text-black p-1' type='text' name='languages' placeholder='Idiomas' onChange={handleChange} />
           </div>
-        </form>
       </section>
 
-      <section className='border'>
+      <section className=''>
         <h2>Preview</h2>
         <PDFViewer className='h-[85%] w-full'>
           <Cv {...data} />
