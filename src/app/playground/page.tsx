@@ -26,6 +26,8 @@ export default function Playground () {
 
   const [abilities, setAbilities] = useState([])
 
+  const [languages, setLanguages] = useState([])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(data)
     setData({
@@ -69,8 +71,24 @@ export default function Playground () {
     setAbilities(updatedAbilities)
   }
 
+  const handleAddLanguages = () => {
+    const lang = languageRef.current.value
+
+    if (languages.indexOf(lang) === -1 && lang !== '') {
+      setLanguages([...languages, lang])
+    }
+    console.log(languages)
+  }
+
+  const handleDeleteLanguage = (index: number) => {
+    const updatedLanguages = [...languages]
+    updatedLanguages.splice(index, 1)
+    setLanguages(updatedLanguages)
+  }
+
   const modalRef = useRef(null)
   const abilityRef = useRef(null)
+  const languageRef = useRef(null)
 
   return (
     <main className='mx-auto flex flex-col lg:flex-row [&>section]:flex-1'>
@@ -181,14 +199,37 @@ export default function Playground () {
               </div>
             </div>
 
-            <input className='text-black p-1' type='text' name='languages' placeholder='Idiomas' onChange={handleChange} />
+            <div className='lg:w-3/4'>
+              <label className='mr-2'>Idiomas</label>
+              <select className='text-black' data-placeholder='Choose a Language...' onChange={handleAddLanguages} ref={languageRef}>
+                <option value='' defaultChecked />
+                <option value='Inglés'>Inglés</option>
+                <option value='Español'>Español</option>
+                <option value='Francés'>Francés</option>
+                <option value='Alemán'>Alemán</option>
+                <option value='Italiano'>Italiano</option>
+                <option value='Portugués'>Portugués</option>
+                <option value='Chino'>Chino</option>
+              </select>
+              <div className='my-4 flex gap-4 flex-wrap text-sm'>
+                {languages?.map((language, i) => {
+                  return (
+                    <span className='flex justify-between items-center gap-2 border border-blue-500 pl-3 rounded-xl' key={i}>
+                      <span>{language}</span>
+                      <button className='px-2 rounded-xl py-1' onClick={() => handleDeleteLanguage(i)}>✕</button>
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
+
           </div>
       </section>
 
       <section className=''>
         <h2>Preview</h2>
         <PDFViewer className='h-[85%] w-full'>
-          <Cv {...data} />
+          <Cv {...data} languages={languages}/>
         </PDFViewer>
 
         <div className=''>

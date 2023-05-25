@@ -1,6 +1,6 @@
-import { Document, Page, Text, StyleSheet } from '@react-pdf/renderer'
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 
-export default function Cv ({ email, phone, linkedIn, github, user, profile, role }) {
+export default function Cv ({ email, phone, linkedIn, github, user, profile, languages }) {
   const styles = StyleSheet.create({
     body: {
       paddingTop: 25,
@@ -27,6 +27,9 @@ export default function Cv ({ email, phone, linkedIn, github, user, profile, rol
     profile: {
       marginTop: 5,
       fontSize: 14
+    },
+    languagesContainer: {
+      display: 'flex'
     }
   })
   return (
@@ -34,8 +37,16 @@ export default function Cv ({ email, phone, linkedIn, github, user, profile, rol
       <Page style={styles.body}>
         <Text style={styles.infoText}>{email}   {phone}   {linkedIn}   {github}</Text>
         <Text style={styles.title}>{user}</Text>
-        <Text style={styles.role}>{role}</Text>
+        {/* <Text style={styles.role}>{role}</Text> */}
         <Text style={styles.profile}>{profile}</Text>
+        <View>
+          <Text>Idiomas:</Text>
+          <View>
+            {languages && languages.map((lang, i) => {
+              return <Text key={i}>·{lang}</Text>
+            })}
+          </View>
+        </View>
       </Page>
     </Document>
   )
