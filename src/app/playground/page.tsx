@@ -2,7 +2,7 @@
 
 import Cv from '@/components/CV'
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 
 export default function Playground () {
   const [data, setData] = useState({
@@ -23,6 +23,8 @@ export default function Playground () {
   })
 
   const [totalWorkExperiences, setTotalWorkExperiences] = useState([]<workExperienceForm>)
+
+  const [abilities, setAbilities] = useState([])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(data)
@@ -56,7 +58,19 @@ export default function Playground () {
     setTotalWorkExperiences(updatedTotalWorkExperiences)
   }
 
+  const handleAddAbility = () => {
+    setAbilities([...abilities, abilityRef.current.value])
+    console.log(abilities)
+  }
+
+  const handleDeleteAbility = (index: number) => {
+    const updatedAbilities = [...abilities]
+    updatedAbilities.splice(index, 1)
+    setAbilities(updatedAbilities)
+  }
+
   const modalRef = useRef(null)
+  const abilityRef = useRef(null)
 
   return (
     <main className='mx-auto flex flex-col lg:flex-row [&>section]:flex-1'>
@@ -151,7 +165,22 @@ export default function Playground () {
               })}
             </div>
 
-            <input className='text-black p-1' type='text' name='habilites' placeholder='Habilidades' onChange={handleChange} />
+            <div className='lg:w-3/4'>
+              <label>Habilidades</label>
+              <input className='text-black p-1 ml-2' type='text' name='habilites' placeholder='JavaScript, React, Trabajo en Equipo etc...' ref={abilityRef} />
+              <button className='px-3 py-1 border-2 border-blue-500 rounded-md text-gray-200 font-bold' onClick={handleAddAbility}>+</button>
+              <div className='my-4 flex gap-4 flex-wrap text-sm'>
+                {abilities?.map((ability, i) => {
+                  return (
+                    <span className='flex justify-between items-center gap-2 border border-blue-500 pl-3 rounded-xl' key={i}>
+                      <span>{ability}</span>
+                      <button className='px-2 rounded-xl py-1' onClick={() => handleDeleteAbility(i)}>✕</button>
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
+
             <input className='text-black p-1' type='text' name='languages' placeholder='Idiomas' onChange={handleChange} />
           </div>
       </section>
