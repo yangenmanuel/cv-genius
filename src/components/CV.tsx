@@ -1,6 +1,6 @@
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 
-export default function Cv ({ email, phone, linkedIn, github, user, profile, languages }) {
+export default function Cv ({ email, phone, linkedIn, github, user, languages }) {
   const styles = StyleSheet.create({
     body: {
       paddingTop: 25,
@@ -38,7 +38,7 @@ export default function Cv ({ email, phone, linkedIn, github, user, profile, lan
         <Text style={styles.infoText}>{email}   {phone}   {linkedIn}   {github}</Text>
         <Text style={styles.title}>{user}</Text>
         {/* <Text style={styles.role}>{role}</Text> */}
-        <Text style={styles.profile}>{profile}</Text>
+        {/* <Text style={styles.profile}>{profile}</Text> */}
         <View>
           <Text>Idiomas:</Text>
           <View>

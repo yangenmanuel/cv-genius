@@ -1,8 +1,17 @@
 'use client'
 
 import Cv from '@/components/CV'
-import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
-import React, { useState, useRef } from 'react'
+import DownloadBtn from '@/components/DownloadBtn'
+import { PDFViewer } from '@react-pdf/renderer'
+import React, { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
+
+async function getOfferData (id: string) {
+  const res = await fetch(`/api/getOffer?offerId=${id}`)
+  const json = await res.json()
+
+  return json
+}
 
 export default function Playground () {
   const [data, setData] = useState({
@@ -27,6 +36,15 @@ export default function Playground () {
   const [abilities, setAbilities] = useState([])
 
   const [languages, setLanguages] = useState([])
+
+  const [offerId, setOfferId] = useState('')
+
+  const [offerData, setOfferData] = useState({
+    imgUrl: String,
+    title: String,
+    description: String,
+    skillsList: Array
+  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log(data)
@@ -86,9 +104,38 @@ export default function Playground () {
     setLanguages(updatedLanguages)
   }
 
+  const handleJobLink = () => {
+    const regex = /^https:\/\/www\.infojobs\.net\/(.*)$/ig
+    const link = linkRef.current.value
+    const isValidLink = regex.test(link)
+
+    if (isValidLink && link.includes('/of-i')) {
+      const start = link.indexOf('/of-i') + 5
+      const end = link.indexOf('?')
+
+      const slicedJobId = link.slice(start, end)
+      setOfferId(slicedJobId)
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      const res = await getOfferData(offerId)
+      setOfferData({
+        title: res.title,
+        imgUrl: res.profile?.logoUrl,
+        description: res.description,
+        skillsList: res.skillsList
+      })
+
+      console.log(offerData)
+    })()
+  }, [offerId])
+
   const modalRef = useRef(null)
   const abilityRef = useRef(null)
   const languageRef = useRef(null)
+  const linkRef = useRef(null)
 
   return (
     <main className='mx-auto flex flex-col lg:flex-row [&>section]:flex-1'>
@@ -223,24 +270,36 @@ export default function Playground () {
               </div>
             </div>
 
+            <div className=''>
+              <label>Link de la oferta de trabajo de <span className='font-source-sans-pro font-extrabold bg-clip-text fill-transparent text-fill-transparent bg-gradient-to-r from-indigo-500 from-10% to-sky-500 text-lg'>InfoJobs</span></label>
+              <p className='w-[60ch] text-gray-400'>*En otra pestaña de tu navegador abre la oferta de trabajo y copia y pega el link de la misma. La usaremos para adaptar tu perfil a las necesidades de la empresa y que encajes perfectamente para la oferta</p>
+              <input className='text-black p-1 mt-2 w-full' type='text' name='offerId' placeholder='https://www.infojobs.net/...' onChange={handleJobLink} ref={linkRef} />
+
+              <div className='mt-3'>
+                {typeof offerData.title === 'string' && (
+                  <div className='bg-[#202024] flex flex-row justify-between rounded-lg'>
+                    <div className=''>
+                      {typeof offerData.imgUrl === 'string' && <Image src={offerData.imgUrl} className='rounded-s-lg inline' alt='logo image' width={90} height={90} />}
+                      <span className='ml-5'>{offerData.title}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
       </section>
 
       <section className=''>
         <h2>Preview</h2>
         <PDFViewer className='h-[85%] w-full'>
-          <Cv {...data} languages={languages}/>
+          <Cv {...data} languages={languages} />
         </PDFViewer>
 
         <div className=''>
           {/* Need 2 times the Cv component with the same props because one is the pdf rendering in the browser
               and other is the pdf that is going to be downloaded
           */}
-          <div className='flex items-center justify-center p-1'>
-            <PDFDownloadLink fileName='CV' document={<Cv {...data} />}>
-              {({ loading }) => (loading ? <p>'Cargando'</p> : <button className='text-blue-50 py-2 px-4 bg-blue-500 rounded-md after:content-["↡"] after:ml-2 hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl transition-all duration-300 mx-auto'>Descargar</button>)}
-            </PDFDownloadLink>
-          </div>
+          <DownloadBtn data={data} languages={languages} />
         </div>
       </section>
     </main>
