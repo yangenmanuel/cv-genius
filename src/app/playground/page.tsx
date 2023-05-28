@@ -13,10 +13,27 @@ async function getOfferData (id: string) {
   return json
 }
 
+async function improveCv ({ totalWorkExperiences, abilities, offerData, role, profile }) {
+  const body = { totalWorkExperiences, abilities, offerData, role, profile }
+  // console.log(body)
+  const res = await fetch('/api/improveCv', {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify(body)
+  })
+  const parsedRes = await res.json()
+  const a = parsedRes.improved
+  return a
+}
+
 export default function Playground () {
   const [data, setData] = useState({
     user: String,
     role: String,
+    profile: String,
     email: String,
     phone: String,
     linkedIn: String,
@@ -47,7 +64,7 @@ export default function Playground () {
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(data)
+    // console.log(data)
     setData({
       ...data,
       [e.target.name]: e.target.value
@@ -59,7 +76,7 @@ export default function Playground () {
       ...workExperienceForm,
       [e.target.name]: e.target.value
     })
-    console.log(workExperienceForm)
+    // console.log(workExperienceForm)
   }
 
   const handleClick = () => {
@@ -81,7 +98,7 @@ export default function Playground () {
 
   const handleAddAbility = () => {
     setAbilities([...abilities, abilityRef.current.value])
-    console.log(abilities)
+    // console.log(abilities)
   }
 
   const handleDeleteAbility = (index: number) => {
@@ -96,7 +113,7 @@ export default function Playground () {
     if (languages.indexOf(lang) === -1 && lang !== '') {
       setLanguages([...languages, lang])
     }
-    console.log(languages)
+    // console.log(languages)
   }
 
   const handleDeleteLanguage = (index: number) => {
@@ -119,9 +136,24 @@ export default function Playground () {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('submitted')
+    const { role, profile } = data
+    const res = await improveCv({
+      totalWorkExperiences,
+      offerData,
+      abilities,
+      role,
+      profile
+    })
+    const { AIabilities, AIrole, AIworkExperiences, AIprofile } = res
+
+    setAbilities(AIabilities)
+    setData({ ...data, role: AIrole, profile: AIprofile })
+
+    roleRef.current.value = AIrole
+    profileRef.current.value = AIprofile
+    // console.log(res)
   }
 
   useEffect(() => {
@@ -133,8 +165,6 @@ export default function Playground () {
         description: res.description,
         skillsList: res.skillsList
       })
-
-      console.log(offerData)
     })()
   }, [offerId])
 
@@ -142,6 +172,8 @@ export default function Playground () {
   const abilityRef = useRef(null)
   const languageRef = useRef(null)
   const linkRef = useRef(null)
+  const roleRef = useRef(null)
+  const profileRef = useRef(null)
 
   return (
     <main className='mx-auto flex flex-col lg:flex-row [&>section]:flex-1'>
@@ -172,8 +204,12 @@ export default function Playground () {
                 <input form='mainForm' className='text-black p-1' type='text' name='github' placeholder='github.com/username' onChange={handleChange} />
               </div>
               <div className='m-2'>
+                <label>Rol</label>
+                <input form='mainForm' className='text-black p-1' type='text' name='role' placeholder='Junior Frontend' required ref={roleRef} onChange={handleChange} />
+              </div>
+              <div className='m-2'>
                 <label>Acerca de ti</label>
-                <textarea name='profile' placeholder='Habla un poco sobre ti. Cuantos anos de experiencia tienes, que puedes aportar y que te destaca. No te preocupes, la inteligencia artificial te dará una mano 😉' onChange={handleChange} />
+                <textarea form='mainForm' className='text-black p-1' name='profile' placeholder='Habla un poco sobre ti. Cuantos anos de experiencia tienes, que puedes aportar y que te destaca. No te preocupes, la inteligencia artificial te dará una mano 😉' required ref={profileRef} onChange={handleChange} />
               </div>
             </div>
               <div className='p-5'>
@@ -181,7 +217,8 @@ export default function Playground () {
                   <label className='mr-5'>Añadir experiencia laboral</label>
                   <button className='px-3 py-1 border-2 border-blue-500 rounded-md text-gray-200 font-bold' onClick={handleClick}>+</button>
                 </div>
-                <dialog ref={modalRef} className='rounded-md bg-[#] before:content-["✕"] before:px-2 before:py-1 before:absolute before:-translate-x-4 before:-translate-y-4 before:font-bold before:text-red-500 before:hover:cursor-pointer' onClick={() => modalRef.current.close()}>
+                <dialog ref={modalRef} className='rounded-md bg-[#]'>
+                  <button className='px-2 py-1 absolute -translate-x-4 -translate-y-4 font-bold text-red-500 hover:cursor-pointer' onClick={() => modalRef.current.close()}>✕</button>
                   <div className='mt-3'>
                     <label>Compañía</label>
                     <input form='modalForm' type='text' name='company' onChange={handleWorkDataChange} required />
@@ -264,7 +301,7 @@ export default function Playground () {
                 <div className=''>
                   <label>Link de la oferta de trabajo de <span className='font-source-sans-pro font-extrabold bg-clip-text fill-transparent text-fill-transparent bg-gradient-to-r from-indigo-500 from-10% to-sky-500 text-lg'>InfoJobs</span></label>
                   <p className='w-[60ch] text-gray-400'>*En otra pestaña de tu navegador abre la oferta de trabajo y copia y pega el link de la misma. La usaremos para adaptar tu perfil a las necesidades de la empresa y que encajes perfectamente para la oferta</p>
-                  <input className='text-black p-1 mt-2 w-full' type='text' name='offerId' placeholder='https://www.infojobs.net/...' onChange={handleJobLink} ref={linkRef} />
+                  <input className='text-black p-1 mt-2 w-full' type='text' name='offerId' required placeholder='https://www.infojobs.net/...' onChange={handleJobLink} ref={linkRef} />
                   {typeof offerData.title === 'string' && (
                     <div className='mt-3 lg:w-3/4 bg-[#202024] flex flex-row justify-between items-center rounded-lg'>
                       <div className=''>
