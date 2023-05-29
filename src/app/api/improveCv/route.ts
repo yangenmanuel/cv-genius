@@ -98,7 +98,7 @@ export async function POST (req: Request) {
       }
     ]
   })
-
+  const data: string = completion.data.choices[0].message?.content!
   // console.log(JSON.parse(completion.data.choices[0].message?.content))
-  return NextResponse.json({ improved: JSON.parse(completion.data.choices[0].message?.content) })
+  return NextResponse.json({ improved: JSON.parse(data) })
 }

@@ -3,7 +3,6 @@
 import './styles.css'
 
 import Cv from '@/components/CV'
-import DownloadBtn from '@/components/DownloadBtn'
 import { PDFViewer } from '@react-pdf/renderer'
 import React, { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
@@ -325,13 +324,6 @@ export default function Playground () {
         <PDFViewer className='h-[85%] w-full'>
           <Cv {...data} languages={languages} workExperiences={totalWorkExperiences} abilities={abilities} />
         </PDFViewer>
-
-        <div className=''>
-          {/* Need 2 times the Cv component with the same props because one is the pdf rendering in the browser
-              and other is the pdf that is going to be downloaded
-          */}
-          <DownloadBtn data={data} languages={languages} />
-        </div>
       </section>
     </main>
   )
