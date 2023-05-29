@@ -150,6 +150,7 @@ export default function Playground () {
 
     setAbilities(AIabilities)
     setData({ ...data, role: AIrole, profile: AIprofile })
+    setTotalWorkExperiences(AIworkExperiences)
 
     roleRef.current.value = AIrole
     profileRef.current.value = AIprofile
@@ -321,7 +322,7 @@ export default function Playground () {
       <section className=''>
         <h2>Preview</h2>
         <PDFViewer className='h-[85%] w-full'>
-          <Cv {...data} languages={languages} />
+          <Cv {...data} languages={languages} workExperiences={totalWorkExperiences} abilities={abilities} />
         </PDFViewer>
 
         <div className=''>
