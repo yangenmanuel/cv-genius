@@ -41,27 +41,27 @@ export default function Cv ({ email, phone, linkedIn, github, user, role, profil
         <Text style={styles.profile}>{profile}</Text>
         {typeof workExperiences === 'object' && workExperiences.length !== 0
           ? (
-            <View>
-              <Text>Experiencia Laboral</Text>
+            <View style={{ marginTop: 25 }}>
+              <Text style={{ fontSize: 20 }}>Experiencia Laboral</Text>
               {workExperiences && workExperiences.map((work, i) => {
                 return (
-                  <View key={i}>
-                    <Text>{work.company} {work.from} {work.to}</Text>
-                    <Text>{work.role}</Text>
-                    <Text>{work.description}</Text>
+                  <View key={i} style={{ marginTop: 5, marginLeft: 10 }}>
+                    <Text style={{ fontSize: 19 }}>• {work.company} {work.from} {work.to}</Text>
+                    <Text style={{ fontSize: 16 }}>{work.role}</Text>
+                    <Text style={{ fontSize: 14 }}>{work.description}</Text>
                   </View>
                 )
               })}
             </View>
             )
           : null}
-        
+
         {typeof abilities === 'object' && abilities.length !== 0
           ? (
-            <View>
-              <Text style={{ }}>Habilidades</Text>
+            <View style={{ marginTop: 20 }}>
+              <Text style={{ fontSize: 19 }}>Habilidades</Text>
               {abilities && abilities.map((ability, i) => {
-                return <Text key={i}>• {ability}</Text>
+                return <Text key={i} style={{ fontSize: 14, marginLeft: 5, marginTop: 5}}>• {ability}</Text>
               })}
             </View>
             )
@@ -69,10 +69,10 @@ export default function Cv ({ email, phone, linkedIn, github, user, role, profil
 
         {typeof languages === 'object' && languages.length !== 0
           ? (
-            <View>
-              <Text style={{ }}>Idiomas</Text>
+            <View style={{ marginTop: 20 }}>
+              <Text style={{ fontSize: 19 }}>Idiomas</Text>
               {languages && languages.map((lang, i) => {
-                return <Text key={i}>• {lang}</Text>
+                return <Text key={i} style={{ fontSize: 14, marginLeft: 5, marginTop: 5}}>• {lang}</Text>
               })}
             </View>
             )
