@@ -1,5 +1,7 @@
 'use client'
 
+import './styles.css'
+
 import Cv from '@/components/CV'
 import DownloadBtn from '@/components/DownloadBtn'
 import { PDFViewer } from '@react-pdf/renderer'
@@ -179,38 +181,37 @@ export default function Playground () {
   return (
     <main className='mx-auto flex flex-col lg:flex-row [&>section]:flex-1'>
       <section className=''>
-        <form id='mainForm' onSubmit={handleSubmit} />
-        <form id='modalForm' onSubmit={handleAddWorkExperience} />
-        <h2>Add your information</h2>
-            <div className='p-5'>
-              <h2>Datos Personales</h2>
-              <div className=''>
-                <label>Nombre</label>
-                <input form='mainForm' className='text-black p-1' type='text' name='user' required onChange={handleChange} />
+        <form id='mainForm' onSubmit={handleSubmit} autoComplete='off' />
+        <form id='modalForm' onSubmit={handleAddWorkExperience} autoComplete='off' />
+        <h2>Agrega tu información</h2>
+            <div className='p-5 flex flex-wrap gap-3'>
+              <div className='m-2'>
+                <label className='block mb-2'>Nombre</label>
+                <input form='mainForm' className='px-3 py-2 bg-[#202024] text-gray-300' type='text' name='user' required onChange={handleChange} />
               </div>
               <div className='m-2'>
-                <label>Correo</label>
-                <input form='mainForm' className='text-black p-1' type='email' name='email' placeholder='example@example.com' onChange={handleChange} />
+                <label className='block mb-2'>Correo</label>
+                <input form='mainForm' className='px-3 py-2 bg-[#202024] text-gray-300' type='email' name='email' placeholder='example@example.com' onChange={handleChange} />
               </div>
               <div className='m-2'>
-                <label>Teléfono</label>
-                <input form='mainForm' className='text-black p-1' type='number' name='phone' onChange={handleChange} />
+                <label className='block mb-2'>Teléfono</label>
+                <input form='mainForm' className='px-3 py-2 bg-[#202024] text-gray-300' type='number' name='phone' onChange={handleChange} />
               </div>
               <div className='m-2'>
-                <label>LinkedIn</label>
-                <input form='mainForm' className='text-black p-1' type='text' name='linkedIn' placeholder='in/username' onChange={handleChange} />
+                <label className='block mb-2'>LinkedIn</label>
+                <input form='mainForm' className='px-3 py-2 bg-[#202024] text-gray-300' type='text' name='linkedIn' placeholder='in/username' onChange={handleChange} />
               </div>
               <div className='m-2'>
-                <label>Github</label>
-                <input form='mainForm' className='text-black p-1' type='text' name='github' placeholder='github.com/username' onChange={handleChange} />
+                <label className='block mb-2'>Github</label>
+                <input form='mainForm' className='px-3 py-2 bg-[#202024] text-gray-300' type='text' name='github' placeholder='github.com/username' onChange={handleChange} />
               </div>
               <div className='m-2'>
-                <label>Rol</label>
-                <input form='mainForm' className='text-black p-1' type='text' name='role' placeholder='Junior Frontend' required ref={roleRef} onChange={handleChange} />
+                <label className='block mb-2'>Rol</label>
+                <input form='mainForm' className='px-3 py-2 bg-[#202024] text-gray-300' type='text' name='role' placeholder='Junior Frontend' required ref={roleRef} onChange={handleChange} />
               </div>
-              <div className='m-2'>
-                <label>Acerca de ti</label>
-                <textarea form='mainForm' className='text-black p-1' name='profile' placeholder='Habla un poco sobre ti. Cuantos anos de experiencia tienes, que puedes aportar y que te destaca. No te preocupes, la inteligencia artificial te dará una mano 😉' required ref={profileRef} onChange={handleChange} />
+              <div className='m-2 w-full '>
+                <label className='block mb-2'>Acerca de ti</label>
+                <textarea form='mainForm' className='px-3 py-2 bg-[#202024] text-gray-300 w-[92%] h-24' name='profile' placeholder='Habla un poco sobre ti. Cuantos anos de experiencia tienes, que puedes aportar y que te destaca. No te preocupes, la inteligencia artificial te dará una mano 😉' required ref={profileRef} onChange={handleChange} />
               </div>
             </div>
               <div className='p-5'>

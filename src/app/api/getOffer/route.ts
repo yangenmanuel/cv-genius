@@ -8,7 +8,7 @@ export async function GET (req: Request) {
   const res = await fetch(`https://api.infojobs.net/api/9/offer/${id}`, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Basic NWVmMGMyNjU4YzFmNGRhOGIyYWU4MTk0N2Y3NzdiMjk6REdKTXEwM0dRbVpmeGNiemdVOUZYSmRGazVzcVpHWGwrbHMrZ21WZkMyRTR0NkhQNEM=',
+      Authorization: `Basic ${process.env.AUTH_TOKEN}`,
       'Access-Control-Allow-Origin': '*'
     }
   })

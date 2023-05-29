@@ -29,7 +29,7 @@ export default function RootLayout ({
 }) {
   return (
     <html lang='es' className={`${sourceSansPro.variable} ${lato.variable}`}>
-      <body className='bg-black text-white h-screen'>{children}</body>
+      <body className='bg-[#000414] text-white h-screen'>{children}</body>
     </html>
   )
 }

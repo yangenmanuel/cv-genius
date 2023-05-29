@@ -1,0 +1,17 @@
+input {
+  background: #202024;
+  border-radius: .3rem;
+}
+
+input:-webkit-autofill {
+  -webkit-background-clip: ;
+  background-color: #202024;
+  color: rgb(34, 34, 36);
+  box-shadow: none;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border: none;
+  border-radius: .3rem;
+}
