@@ -304,7 +304,7 @@ export default function Playground () {
                   <p className='w-[60ch] text-gray-400'>*En otra pestaña de tu navegador abre la oferta de trabajo y copia y pega el link de la misma. La usaremos para adaptar tu perfil a las necesidades de la empresa y que encajes perfectamente para la oferta</p>
                   <input className='text-black p-1 mt-2 w-full' type='text' name='offerId' required placeholder='https://www.infojobs.net/...' onChange={handleJobLink} ref={linkRef} />
                   {typeof offerData.title === 'string' && (
-                    <div className='mt-3 lg:w-3/4 bg-[#202024] flex flex-row justify-between items-center rounded-lg'>
+                    <div className='mt-3 lg:w-3/4 bg-[#202024] flex flex-row items-center rounded-lg'>
                       <div className=''>
                         {typeof offerData.imgUrl === 'string'
                           ? <Image src={offerData.imgUrl} className='rounded-s-lg inline' alt='logo image' width={110} height={110} />
