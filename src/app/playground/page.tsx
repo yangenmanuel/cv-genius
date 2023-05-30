@@ -3,7 +3,7 @@
 import './styles.css'
 
 import Cv from '@/components/CV'
-import { PDFViewer } from '@react-pdf/renderer'
+import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer/lib/react-pdf.browser.cjs'
 import React, { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 
@@ -324,6 +324,11 @@ export default function Playground () {
         <PDFViewer className='h-[85%] w-full'>
           <Cv {...data} languages={languages} workExperiences={totalWorkExperiences} abilities={abilities} />
         </PDFViewer>
+        <div className='flex items-center justify-center p-1'>
+      <PDFDownloadLink fileName='CV' document={<Cv {...data} languages={languages} />}>
+      {({ loading }) => (loading ? <p>'Cargando'</p> : <button className='text-blue-50 py-2 px-4 bg-blue-500 rounded-md after:content-["↡"] after:ml-2 hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl transition-all duration-300 mx-auto'>Descargar</button>)}
+      </PDFDownloadLink>
+    </div>
       </section>
     </main>
   )
