@@ -73,7 +73,7 @@ const INITIAL_MESSAGES = [{
       "from": {fecha de inicio},
       "to": {fecha final}
   }],
-      "AIabilities": [{habilidades basadas en la información de usuario y algunas habilidades mas genéricas de tal forma que se adapte mejor a la oferta. Debe ser un array de strings}]
+      "AIabilities": [{habilidades basadas en la información de usuario y algunas habilidades mas genéricas de tal forma que se adapte mejor a la oferta. Debe ser un array de strings con la primera letra en mayúsculas}]
   }
   
   Reemplaza el contenido entre llaves por las instrucciones dadas`

@@ -1,17 +1,15 @@
-input {
-  background: #202024;
-  border-radius: .3rem;
-}
-
-input:-webkit-autofill {
-  -webkit-background-clip: ;
-  background-color: #202024;
-  color: rgb(34, 34, 36);
-  box-shadow: none;
-}
-
 input:focus, textarea:focus {
   outline: none;
   border: none;
-  border-radius: .3rem;
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+
+}
+
+.submit-btn:hover {
+  box-shadow: 0px 0px 60px #3b82f6;
+  /* -webkit-box-reflect: below 10px linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)); */
 }

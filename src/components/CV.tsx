@@ -42,7 +42,7 @@ export default function Cv ({ email, phone, linkedIn, github, user, role, profil
         {typeof workExperiences === 'object' && workExperiences.length !== 0
           ? (
             <View style={{ marginTop: 25 }}>
-              <Text style={{ fontSize: 20 }}>Experiencia Laboral</Text>
+              <Text style={{ fontSize: 18 }}>Experiencia Laboral</Text>
               {workExperiences && workExperiences.map((work, i) => {
                 return (
                   <View key={i} style={{ marginTop: 5, marginLeft: 10 }}>
@@ -59,7 +59,7 @@ export default function Cv ({ email, phone, linkedIn, github, user, role, profil
         {typeof abilities === 'object' && abilities.length !== 0
           ? (
             <View style={{ marginTop: 20 }}>
-              <Text style={{ fontSize: 19 }}>Habilidades</Text>
+              <Text style={{ fontSize: 18 }}>Habilidades</Text>
               {abilities && abilities.map((ability, i) => {
                 return <Text key={i} style={{ fontSize: 14, marginLeft: 5, marginTop: 5}}>• {ability}</Text>
               })}
@@ -70,7 +70,7 @@ export default function Cv ({ email, phone, linkedIn, github, user, role, profil
         {typeof languages === 'object' && languages.length !== 0
           ? (
             <View style={{ marginTop: 20 }}>
-              <Text style={{ fontSize: 19 }}>Idiomas</Text>
+              <Text style={{ fontSize: 18 }}>Idiomas</Text>
               {languages && languages.map((lang, i) => {
                 return <Text key={i} style={{ fontSize: 14, marginLeft: 5, marginTop: 5}}>• {lang}</Text>
               })}
