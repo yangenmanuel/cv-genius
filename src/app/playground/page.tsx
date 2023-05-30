@@ -228,27 +228,27 @@ export default function Playground () {
                   <label className='mr-3'>Añadir experiencia laboral</label>
                   <button className='px-3 py-1 border-2 border-blue-500 rounded-md text-gray-200 font-bold' onClick={handleClick}>+</button>
                 </div>
-                <dialog ref={modalRef} className='rounded-md bg-[#]'>
+                <dialog ref={modalRef} className='rounded-md bg-[#202020]'>
                   <button className='px-2 py-1 absolute -translate-x-4 -translate-y-4 font-bold text-red-500 hover:cursor-pointer' onClick={() => modalRef.current.close()}>✕</button>
+                  <div className='mt-5'>
+                    <label className='text-white block'>Compañía</label>
+                    <input className='px-3 py-2 text-gray-300 bg-[#353535] rounded-md' form='modalForm' type='text' name='company' onChange={handleWorkDataChange} required />
+                  </div>
                   <div className='mt-3'>
-                    <label>Compañía</label>
-                    <input form='modalForm' type='text' name='company' onChange={handleWorkDataChange} required />
+                    <label className='text-white block'>Desde:</label>
+                    <input className='px-3 py-2 text-gray-300 bg-[#353535] rounded-md' form='modalForm' type='month' name='from' onChange={handleWorkDataChange} required />
                   </div>
-                  <div>
-                    <label>Desde:</label>
-                    <input form='modalForm' type='month' name='from' onChange={handleWorkDataChange} required />
+                  <div className='mt-3'>
+                    <label className='text-white block'>Hasta</label>
+                    <input className='px-3 py-2 text-gray-300 bg-[#353535] rounded-md' form='modalForm' type='month' name='to' onChange={handleWorkDataChange} required />
                   </div>
-                  <div>
-                    <label>Hasta</label>
-                    <input form='modalForm' type='month' name='to' onChange={handleWorkDataChange} required />
+                  <div className='mt-3'>
+                    <label className='text-white block'>Rol: </label>
+                    <input className='px-3 py-2 text-gray-300 bg-[#353535] rounded-md' form='modalForm' type='text' name='jobRole' onChange={handleWorkDataChange} required />
                   </div>
-                  <div>
-                    <label>Rol: </label>
-                    <input form='modalForm' type='text' name='jobRole' onChange={handleWorkDataChange} required />
-                  </div>
-                  <div className=''>
-                    <label className='block'>Que labor desempeñaste?</label>
-                    <textarea form='modalForm' name='description' cols={30} rows={10} onChange={handleWorkDataChange} required />
+                  <div className='mt-3'>
+                    <label className='block text-white'>Que labor desempeñaste?</label>
+                    <textarea className='bg-[#353535] text-gray-300 px-3 py-2 rounded-lg' form='modalForm' name='description' cols={40} rows={5} onChange={handleWorkDataChange} required />
                   </div>
                   <div className='flex justify-center'>
                     <button className='px-3 py-2 bg-blue-500 rounded-md text-gray-200' form='modalForm' type='submit'>Añadir</button>
