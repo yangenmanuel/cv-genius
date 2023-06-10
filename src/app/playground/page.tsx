@@ -16,7 +16,13 @@ async function getOfferData (id: string) {
   return json
 }
 
-async function improveCv ({ totalWorkExperiences, abilities, offerData, role, profile }) {
+async function improveCv ({ totalWorkExperiences, abilities, offerData, role, profile }: {
+  totalWorkExperiences: WorkExperience[]
+  abilities: string[]
+  offerData: OfferData
+  role: string
+  profile: string
+}) {
   const body = { totalWorkExperiences, abilities, offerData, role, profile }
   const res = await fetch('/api/improveCv', {
     headers: {
@@ -52,13 +58,18 @@ export default function Playground () {
 
   const [totalWorkExperiences, setTotalWorkExperiences] = useState<WorkExperience[]>([])
 
-  const [abilities, setAbilities] = useState<String[]>([])
+  const [abilities, setAbilities] = useState<string[]>([])
 
   const [languages, setLanguages] = useState<Languages[]>([])
 
   const [offerId, setOfferId] = useState<string>('')
 
-  const [offerData, setOfferData] = useState<OfferData>()
+  const [offerData, setOfferData] = useState<OfferData>({
+    title: '',
+    imgUrl: '',
+    description: '',
+    skillsList: []
+  })
 
   const [loading, setLoading] = useState(false)
 
