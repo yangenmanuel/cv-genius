@@ -7,6 +7,8 @@ import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer/lib/react-pdf.br
 import React, { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 
+import type { UserData, WorkExperience, Languages, OfferData } from '@/types'
+
 async function getOfferData (id: string) {
   const res = await fetch(`/api/getOffer?offerId=${id}`)
   const json = await res.json()
@@ -16,7 +18,6 @@ async function getOfferData (id: string) {
 
 async function improveCv ({ totalWorkExperiences, abilities, offerData, role, profile }) {
   const body = { totalWorkExperiences, abilities, offerData, role, profile }
-  // console.log(body)
   const res = await fetch('/api/improveCv', {
     headers: {
       'Content-Type': 'application/json',
@@ -31,66 +32,55 @@ async function improveCv ({ totalWorkExperiences, abilities, offerData, role, pr
 }
 
 export default function Playground () {
-  const [data, setData] = useState({
-    user: String,
-    role: String,
-    profile: String,
-    email: String,
-    phone: String,
-    linkedIn: String,
-    github: String
+  const [data, setData] = useState<UserData>({
+    user: '',
+    role: '',
+    profile: '',
+    email: '',
+    phone: '',
+    linkedIn: '',
+    github: ''
   })
 
-  const [workExperienceForm, setWorkExperienceForm] = useState({
-    company: String,
-    from: String,
-    to: String,
-    jobRole: String,
-    description: String
+  const [workExperience, setWorkExperience] = useState<WorkExperience>({
+    company: '',
+    from: '',
+    to: '',
+    jobRole: '',
+    description: ''
   })
 
-  const [totalWorkExperiences, setTotalWorkExperiences] = useState([]<workExperienceForm>)
+  const [totalWorkExperiences, setTotalWorkExperiences] = useState<WorkExperience[]>([])
 
-  const [abilities, setAbilities] = useState([])
+  const [abilities, setAbilities] = useState<String[]>([])
 
-  const [languages, setLanguages] = useState([])
+  const [languages, setLanguages] = useState<Languages[]>([])
 
-  const [offerId, setOfferId] = useState('')
+  const [offerId, setOfferId] = useState<string>('')
 
-  const [offerData, setOfferData] = useState({
-    imgUrl: String,
-    title: String,
-    description: String,
-    skillsList: Array
-  })
+  const [offerData, setOfferData] = useState<OfferData>()
 
   const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    // console.log(data)
-    setData({
-      ...data,
+    setData(prevData => ({
+      ...prevData,
       [e.target.name]: e.target.value
-    })
+    }))
   }
 
   const handleWorkDataChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    setWorkExperienceForm({
-      ...workExperienceForm,
+    setWorkExperience(prevWorkExperience => ({
+      ...prevWorkExperience,
       [e.target.name]: e.target.value
-    })
-    // console.log(workExperienceForm)
-  }
-
-  const handleClick = () => {
-    modalRef.current.showModal()
+    }))
   }
 
   const handleAddWorkExperience = (e: React.FormEvent) => {
     e.preventDefault()
-    setTotalWorkExperiences([...totalWorkExperiences, workExperienceForm])
+    setTotalWorkExperiences([...totalWorkExperiences, workExperience])
     console.log(totalWorkExperiences)
-    modalRef.current.close()
+    modalRef.current?.close()
   }
 
   const handleDelete = (index: number) => {
@@ -100,11 +90,16 @@ export default function Playground () {
   }
 
   const handleAddAbility = () => {
-    let value = abilityRef.current.value
+    const value = abilityRef.current?.value as string
     if (value !== '') {
-      const capitalizedAbiltiy = value.charAt(0).toUpperCase() + value.slice(1)
+      const capitalizedAbility = value.charAt(0).toUpperCase() + value.slice(1)
 
-      setAbilities([...abilities, capitalizedAbiltiy])
+      setAbilities(prevAbilities => (
+        [...prevAbilities, capitalizedAbility]
+      ))
+    }
+
+    if (abilityRef.current !== null) {
       abilityRef.current.value = ''
       abilityRef.current.focus()
     }
@@ -117,12 +112,13 @@ export default function Playground () {
   }
 
   const handleAddLanguages = () => {
-    const lang = languageRef.current.value
+    const lang = languageRef.current?.value as Languages
 
-    if (languages.indexOf(lang) === -1 && lang !== '') {
-      setLanguages([...languages, lang])
+    if (!languages.includes(lang) && lang !== '') {
+      setLanguages(prevLanguages => (
+        [...prevLanguages, lang]
+      ))
     }
-    // console.log(languages)
   }
 
   const handleDeleteLanguage = (index: number) => {
@@ -133,7 +129,7 @@ export default function Playground () {
 
   const handleJobLink = () => {
     const regex = /^https:\/\/www\.infojobs\.net\/(.*)$/ig
-    const link = linkRef.current.value
+    const link = linkRef.current?.value as string
     const isValidLink = regex.test(link)
 
     if (isValidLink && link.includes('/of-i')) {
@@ -162,30 +158,32 @@ export default function Playground () {
     setData({ ...data, role: AIrole, profile: AIprofile })
     setTotalWorkExperiences(AIworkExperiences)
 
-    roleRef.current.value = AIrole
-    profileRef.current.value = AIprofile
+    if (roleRef.current !== null && profileRef.current !== null) {
+      roleRef.current.value = AIrole
+      profileRef.current.value = AIprofile
+    }
 
     setLoading(false)
   }
 
   useEffect(() => {
-    (async () => {
+    void (async () => {
       const res = await getOfferData(offerId)
       setOfferData({
-        title: res.title,
+        title: res?.title,
         imgUrl: res.profile?.logoUrl,
-        description: res.description,
-        skillsList: res.skillsList
+        description: res?.description,
+        skillsList: res?.skillsList
       })
     })()
   }, [offerId])
 
-  const modalRef = useRef(null)
-  const abilityRef = useRef(null)
-  const languageRef = useRef(null)
-  const linkRef = useRef(null)
-  const roleRef = useRef(null)
-  const profileRef = useRef(null)
+  const modalRef = useRef<HTMLDialogElement>(null)
+  const abilityRef = useRef<HTMLInputElement>(null)
+  const languageRef = useRef<HTMLSelectElement>(null)
+  const linkRef = useRef<HTMLInputElement>(null)
+  const roleRef = useRef<HTMLInputElement>(null)
+  const profileRef = useRef<HTMLTextAreaElement>(null)
 
   return (
     <main className='mx-auto flex flex-col lg:flex-row [&>section]:flex-1'>
@@ -226,10 +224,10 @@ export default function Playground () {
               <div className='px-5'>
                 <div className='mb-3'>
                   <label className='mr-3'>Añadir experiencia laboral</label>
-                  <button className='px-3 py-1 border-2 border-blue-500 rounded-md text-gray-200 font-bold' onClick={handleClick}>+</button>
+                  <button className='px-3 py-1 border-2 border-blue-500 rounded-md text-gray-200 font-bold' onClick={() => modalRef.current?.showModal()}>+</button>
                 </div>
                 <dialog ref={modalRef} className='rounded-md bg-[#202020]'>
-                  <button className='px-2 py-1 absolute -translate-x-4 -translate-y-4 font-bold text-red-500 hover:cursor-pointer' onClick={() => modalRef.current.close()}>✕</button>
+                  <button className='px-2 py-1 absolute -translate-x-4 -translate-y-4 font-bold text-red-500 hover:cursor-pointer' onClick={() => modalRef.current?.close()}>✕</button>
                   <div className='mt-5'>
                     <label className='text-white block'>Compañía</label>
                     <input className='px-3 py-2 text-gray-300 bg-[#353535] rounded-md' form='modalForm' type='text' name='company' onChange={handleWorkDataChange} required />
@@ -315,13 +313,12 @@ export default function Playground () {
                   <label>Link de la oferta de trabajo de <span className='font-source-sans-pro font-extrabold bg-clip-text fill-transparent text-fill-transparent bg-gradient-to-r from-indigo-500 from-10% to-sky-500 text-lg'>InfoJobs</span></label>
                   <p className='w-[60ch] text-gray-400'>*En otra pestaña de tu navegador abre la oferta de trabajo y copia y pega el link de la misma. La usaremos para adaptar tu perfil a las necesidades de la empresa y que encajes perfectamente para la oferta</p>
                   <input className='px-3 py-2 bg-[#202024] text-gray-300 rounded-md mt-2 w-[93%]' form='main-form' autoComplete='off' type='text' name='offerId' required placeholder='https://www.infojobs.net/...' onChange={handleJobLink} ref={linkRef} />
-                  {typeof offerData.title === 'string' && (
+                  {typeof offerData?.title === 'string' && (
                     <div className='mt-3 lg:w-5/6 bg-[#202024] flex flex-row items-center rounded-lg'>
                       <div className=''>
                         {typeof offerData.imgUrl === 'string'
                           ? <Image src={offerData.imgUrl} className='rounded-s-lg inline' alt='logo image' width={110} height={110} />
-                          : <Image src='/no-pic.webp' className='rounded-s-lg inline' alt='logo image' width={110} height={110} />
-                        }
+                          : <Image src='/no-pic.webp' className='rounded-s-lg inline' alt='logo image' width={110} height={110} />}
                       </div>
                       <span className='ml-5'>{offerData.title}</span>
                     </div>

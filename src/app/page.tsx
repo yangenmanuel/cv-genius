@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home () {
   return (
@@ -12,7 +13,7 @@ export default function Home () {
         <p className='mt-8 mb-5 w-2/3 text-lg'>
           Crea currículums personalizados para cada oferta de trabajo en <span className='font-source-sans-pro font-extrabold bg-clip-text fill-transparent text-fill-transparent bg-gradient-to-r from-indigo-500 from-10% to-sky-500'>InfoJobs</span> con un poderoso generador de CVs basado en IA
         </p>
-        <a className='py-2 px-4 bg-blue-500 rounded-md after:content-["↗"] after:ml-2 hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl transition-all duration-300' href='/playground'>Pruébalo gratis!</a>
+        <Link className='py-2 px-4 bg-blue-500 rounded-md after:content-["↗"] after:ml-2 hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl transition-all duration-300' href='/playground'>Pruébalo gratis!</Link>
       </section>
 
       <Image className='animate-float' src='/resume.svg' alt='awd' width={350} height={100} priority />
