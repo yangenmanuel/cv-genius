@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/eslint-plugin-next": "^13.4.5",
     "@react-pdf/renderer": "^3.1.9",
     "@types/node": "20.2.1",
     "@types/react": "18.2.6",
@@ -16,9 +17,12 @@
     "autoprefixer": "10.4.14",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "next": "13.4.2",
     "openai": "^3.2.1",
     "postcss": "8.4.23",
+    "prettier-plugin-tailwindcss": "^0.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
@@ -26,6 +30,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "prettier": "^2.8.8",
     "ts-standard": "^12.0.2"
   }
 }
