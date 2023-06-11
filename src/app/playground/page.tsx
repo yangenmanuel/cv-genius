@@ -1,16 +1,18 @@
 'use client'
 
 import './styles.css'
-
-import Cv from '@/components/CV'
-import {
-  PDFViewer,
-  PDFDownloadLink
-} from '@react-pdf/renderer/lib/react-pdf.browser.cjs'
-import React, { useState, useRef, useEffect } from 'react'
-import Image from 'next/image'
-
 import type { UserData, WorkExperience, Languages, OfferData } from '@/types'
+
+import React, { useState, useRef, useEffect } from 'react'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import Cv from '@/components/CV'
+import { PDFViewer } from '@react-pdf/renderer'
+
+const PDFDownloadLink = dynamic(async () => await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+});
 
 async function getOfferData(id: string) {
   const res = await fetch(`/api/getOffer?offerId=${id}`)
