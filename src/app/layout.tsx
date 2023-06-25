@@ -1,7 +1,7 @@
 import './globals.css'
-import { Source_Sans_Pro, Lato } from 'next/font/google'
+import { Source_Sans_3, Lato } from 'next/font/google'
 
-const sourceSansPro = Source_Sans_Pro({
+const sourceSansPro = Source_Sans_3({
   weight: '700',
   subsets: ['latin'],
   variable: '--font-source-sans-pro'

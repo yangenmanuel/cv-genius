@@ -4,15 +4,9 @@ import './styles.css'
 import type { UserData, WorkExperience, Languages, OfferData } from '@/types'
 
 import React, { useState, useRef, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Cv from '@/components/CV'
-import { PDFViewer } from '@react-pdf/renderer'
-
-const PDFDownloadLink = dynamic(async () => await import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink), {
-  ssr: false,
-  loading: () => <p>Loading...</p>,
-});
+import { PDFViewer , PDFDownloadLink } from '@react-pdf/renderer/lib/react-pdf.browser.cjs'
 
 async function getOfferData(id: string) {
   const res = await fetch(`/api/getOffer?offerId=${id}`)
@@ -395,7 +389,7 @@ export default function Playground() {
             {totalWorkExperiences?.map((item, i) => {
               return (
                 <div
-                  className='mb-2 block flex items-center justify-between rounded-md bg-[#202020] px-2 py-4'
+                  className='mb-2 block items-center justify-between rounded-md bg-[#202020] px-2 py-4'
                   key={i}
                 >
                   <div className=''>
@@ -574,9 +568,15 @@ export default function Playground() {
               />
             }
           >
-            <button className='mx-auto rounded-md bg-blue-500 px-4 py-2 text-blue-50 transition-all duration-300 after:ml-2 after:content-["↡"] hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl'>
-              Descargar
-            </button>
+            {({ loading }: { loading: boolean }) =>
+              loading ? (
+                'Loading document...'
+              ) : (
+                <button className='mx-auto rounded-md bg-blue-500 px-4 py-2 text-blue-50 transition-all duration-300 after:ml-2 after:content-["↡"] hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl'>
+                  Descargar
+                </button>
+              )
+            }
           </PDFDownloadLink>
         </div>
       </section>
