@@ -15,11 +15,7 @@ const lato = Lato({
 
 export const metadata = {
   title: 'CVGenius',
-  description: `Crea curriculums profesionales en minutos con nuestro 
-  generador de curriculums utilizando inteligencia artificial. Accede 
-  a plantillas personalizables, obtén consejos de redacción y destaca 
-  tus habilidades de manera efectiva. Interfaz intuitiva, inteligencia 
-  artificial avanzada y compatibilidad multiplataforma.`
+  description: `Optimize your job application with our AI-powered curriculum generator. Tailor your curriculum to match Infojobs' requirements using advanced algorithms. Maximize your chances of landing the perfect job. Try now!`
 }
 
 export default function RootLayout ({
