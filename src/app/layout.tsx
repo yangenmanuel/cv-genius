@@ -1,7 +1,7 @@
 import './globals.css'
-import { Source_Sans_3, Lato } from 'next/font/google'
+import { Source_Sans_Pro, Lato } from 'next/font/google'
 
-const sourceSansPro = Source_Sans_3({
+const sourceSansPro = Source_Sans_Pro({
   weight: '700',
   subsets: ['latin'],
   variable: '--font-source-sans-pro'
@@ -25,7 +25,7 @@ export default function RootLayout ({
 }) {
   return (
     <html lang='es' className={`${sourceSansPro.variable} ${lato.variable}`}>
-      <body className='bg-[#000414] text-white h-screen'>{children}</body>
+      <body className='bg-[#000414] text-white'>{children}</body>
     </html>
   )
 }
