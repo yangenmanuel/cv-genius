@@ -1,5 +1,6 @@
 import './globals.css'
 import { Source_Sans_Pro, Lato } from 'next/font/google'
+import { Metadata } from 'next'
 
 const sourceSansPro = Source_Sans_Pro({
   weight: '700',
@@ -13,9 +14,15 @@ const lato = Lato({
   variable: '--font-lato'
 })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'CVGenius',
-  description: `Optimize your job application with our AI-powered curriculum generator. Tailor your curriculum to match Infojobs' requirements using advanced algorithms. Maximize your chances of landing the perfect job. Try now!`
+  description: `Optimize your job application with our AI-powered curriculum generator. Tailor your curriculum to match Infojobs' requirements using advanced algorithms. Maximize your chances of landing the perfect job. Try now!`,
+  colorScheme: 'dark',
+  creator: 'Yang Enmanuel',
+  openGraph: {
+    images: 'https://res.cloudinary.com/dkjanvewl/image/upload/v1688221960/CVGenius_yqifo0.png',
+    type: 'website'
+  }
 }
 
 export default function RootLayout ({
