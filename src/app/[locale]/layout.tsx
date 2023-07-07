@@ -1,6 +1,8 @@
 import './globals.css'
 import { Source_Sans_Pro, Lato } from 'next/font/google'
 import { Metadata } from 'next'
+import { NextIntlClientProvider } from 'next-intl'
+import { notFound } from 'next/navigation'
 
 const sourceSansPro = Source_Sans_Pro({
   weight: '700',
@@ -25,14 +27,31 @@ export const metadata: Metadata = {
   }
 }
 
-export default function RootLayout ({
-  children
+export function generateStaticParams () {
+  return [{locale: 'es'}, {locale: 'en'}, {locale: 'pt'}]
+}
+
+export default async function RootLayout ({
+  children, params: { locale }
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  params: { locale: string },
 }) {
+  let messages
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default 
+  }
+  catch (err) {
+    notFound()
+  }
+
   return (
-    <html lang='es' className={`${sourceSansPro.variable} ${lato.variable}`}>
-      <body className='bg-[#000414] text-white'>{children}</body>
+    <html lang={locale} className={`${sourceSansPro.variable} ${lato.variable}`}>
+      <body className='bg-[#000414] text-white'>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
     </html>
   )
 }

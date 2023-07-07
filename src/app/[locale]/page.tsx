@@ -1,6 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 export default function Home() {
+  const t = useTranslations('Index')
+
   return (
     <main className='relative flex h-[100svh] w-screen flex-col items-center justify-center overflow-hidden'>
       <h1
@@ -10,17 +15,17 @@ export default function Home() {
         CVGenius
       </h1>
       <p className='text-md mx-auto mb-5 mt-8 w-4/5 text-center lg:w-1/3 lg:text-lg'>
-        Crea currículums personalizados para cada oferta de trabajo en{' '}
+        {t('heading-part-1')}{' '}
         <span className='bg-gradient-to-r from-indigo-500 from-10% to-sky-500 bg-clip-text fill-transparent font-source-sans-pro font-extrabold text-fill-transparent'>
           InfoJobs
         </span>{' '}
-        con un poderoso generador de CVs basado en IA
+        {t('awd')}
       </p>
       <Link
         className='rounded-md bg-blue-700 py-2 pl-4 pr-8 text-white transition-all duration-300 after:absolute after:ml-2 after:transition-transform after:duration-300 after:content-["↗"] hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl hover:after:scale-150'
         href='/playground'
       >
-        Pruébalo gratis!
+        {t('button')}
       </Link>
     </main>
   )
