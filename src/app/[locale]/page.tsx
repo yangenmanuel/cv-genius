@@ -19,7 +19,7 @@ export default function Home() {
         <span className='bg-gradient-to-r from-indigo-500 from-10% to-sky-500 bg-clip-text fill-transparent font-source-sans-pro font-extrabold text-fill-transparent'>
           InfoJobs
         </span>{' '}
-        {t('awd')}
+        {t('heading-part-2')}
       </p>
       <Link
         className='rounded-md bg-blue-700 py-2 pl-4 pr-8 text-white transition-all duration-300 after:absolute after:ml-2 after:transition-transform after:duration-300 after:content-["↗"] hover:bg-blue-200 hover:text-black hover:drop-shadow-2xl hover:after:scale-150'
