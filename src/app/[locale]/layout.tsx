@@ -18,35 +18,40 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   title: 'CVGenius',
-  description: `Optimize your job application with our AI-powered curriculum generator. Tailor your curriculum to match Infojobs' requirements using advanced algorithms. Maximize your chances of landing the perfect job. Try now!`,
+  description:
+    'Optimize your job application with our AI-powered curriculum generator. Tailor your curriculum to match InfoJobs requirements using advanced algorithms. Maximize your chances of landing the perfect job. Try now!',
   colorScheme: 'dark',
   creator: 'Yang Enmanuel',
   openGraph: {
-    images: 'https://res.cloudinary.com/dkjanvewl/image/upload/v1688221960/CVGenius_yqifo0.png',
+    images:
+      'https://res.cloudinary.com/dkjanvewl/image/upload/v1688221960/CVGenius_yqifo0.png',
     type: 'website'
   }
 }
 
-export function generateStaticParams () {
-  return [{locale: 'es'}, {locale: 'en'}, {locale: 'pt'}]
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }, { locale: 'pt' }]
 }
 
-export default async function RootLayout ({
-  children, params: { locale }
+export default async function RootLayout({
+  children,
+  params: { locale }
 }: {
-  children: React.ReactNode,
-  params: { locale: string },
+  children: React.ReactNode
+  params: { locale: string }
 }) {
   let messages
   try {
-    messages = (await import(`../../messages/${locale}.json`)).default 
-  }
-  catch (err) {
+    messages = (await import(`../../messages/${locale}.json`)).default
+  } catch (err) {
     notFound()
   }
 
   return (
-    <html lang={locale} className={`${sourceSansPro.variable} ${lato.variable}`}>
+    <html
+      lang={locale}
+      className={`${sourceSansPro.variable} ${lato.variable}`}
+    >
       <body className='bg-[#000414] text-white'>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
