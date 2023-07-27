@@ -3,6 +3,7 @@ import { Source_Sans_Pro, Lato } from 'next/font/google'
 import { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
+import LanguageSelector from '@/components/LanguageSelector'
 
 const sourceSansPro = Source_Sans_Pro({
   weight: '700',
@@ -52,8 +53,9 @@ export default async function RootLayout({
       lang={locale}
       className={`${sourceSansPro.variable} ${lato.variable}`}
     >
-      <body className='bg-[#000414] text-white'>
+      <body className='bg-[#000414] text-white overflow-x-hidden overflow-y-auto'>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <LanguageSelector />
           {children}
         </NextIntlClientProvider>
       </body>

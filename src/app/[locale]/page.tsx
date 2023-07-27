@@ -7,7 +7,7 @@ export default function Home() {
   const t = useTranslations('Index')
 
   return (
-    <main className='relative flex h-[100svh] w-screen flex-col items-center justify-center overflow-hidden'>
+    <main className='relative flex h-[calc(100svh-200px)] w-screen flex-col items-center justify-center overflow-hidden'>
       <h1
         className='pointer-events-none bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text fill-transparent font-source-sans-pro text-7xl text-fill-transparent before:absolute
         before:h-[350px] before:w-[350px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-to-br before:from-emerald-500 before:to-indigo-500 before:opacity-20 before:blur-xl after:absolute after:h-[180px] after:w-[240px] after:-translate-x-1/3 after:-translate-y-1/3 after:rounded-lg  after:bg-gradient-conic after:from-sky-900 after:via-[#0141ff] after:opacity-40 after:blur-2xl lg:text-8xl'
