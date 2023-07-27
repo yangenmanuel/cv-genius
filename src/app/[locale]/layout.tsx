@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
 import LanguageSelector from '@/components/LanguageSelector'
+import { Analytics } from '@vercel/analytics/react'
 
 const sourceSansPro = Source_Sans_Pro({
   weight: '700',
@@ -57,6 +58,7 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <LanguageSelector />
           {children}
+          <Analytics />
         </NextIntlClientProvider>
       </body>
     </html>
